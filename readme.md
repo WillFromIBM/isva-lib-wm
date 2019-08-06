@@ -1,7 +1,12 @@
 # wm-lib
 An ISAM Infomap Library
 
+Version: 0.1
+
 ## Library Functions:
+
+- generateJWT()
+- base64URLEncode()
 
 ### wm.generateJWT()
 Function:  Returns a signed JWT  
@@ -35,7 +40,7 @@ Example:
 
 ## Installation
 
-To install the library, upload lib-wm.js as a new mapping rule to ISAM (Secure Access Control -> Mapping Rules)..
+To install the library, upload lib-wm.js as a new mapping rule to ISAM (Secure Access Control -> Mapping Rules).
 
 In the mapping rule where you want to use the library functions, include the library with
 
