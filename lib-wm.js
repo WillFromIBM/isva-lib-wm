@@ -1,4 +1,4 @@
-/* WMLib v0.0.3 - Do NOT Modify the first two liberies or their copyright notices */
+/* WMLib v0.0.4 - Do NOT Modify the first two liberies or their copyright notices */
 
 /*
 Library 1 - Do not modify
@@ -32,7 +32,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 
 /*
 Library 3 - Feel free to modify
-WMLib v0.0.3
+WMLib v0.0.4
 github.ibm.com/will-murphy/wmlib
 MIT licence applies only to code from this line below:
 */
@@ -109,6 +109,47 @@ var wm = {
     responseObj.headers = responseHeaders;
 
     return responseObj;
+
+  },
+  performPOST: function(url, headers, body, debug) {
+	//Perform a post request and return the body of the response
+
+  if (debug == null) { debug = false }
+
+	var hr = new HttpResponse();
+
+  if (debug) {
+	   IDMappingExtUtils.traceString("wmlib::perform_post::url:" + url);
+	   IDMappingExtUtils.traceString("wmlib::perform_post::body:" + body);
+  }
+
+	hr = HttpClient.httpPost(url, headers, body, null, null, null, null, null);
+
+	if (hr != null) {
+    if (debug) {
+		    IDMappingExtUtils.traceString("code: " + hr.getCode());
+		    IDMappingExtUtils.traceString("body: " + hr.getBody());
+    }
+
+		headerKeys = hr.getHeaderKeys();
+		if (headerKeys != null) {
+			for ( var i = 0; i < headerKeys.length; i++) {
+				var headerValues = hr.getHeaderValues(headerKeys[i]);
+				for ( var j = 0; j < headerValues.length; j++) {
+          responseHeaders[headerKeys[i]] = headerValues[j];
+					if (debug) { IDMappingExtUtils.traceString("header: " + headerKeys[i] + "=" + headerValues[j]) }
+				}
+			}
+		}
+	}
+
+
+  var responseObj = {};
+  responseObj.code = hr.getCode();
+  responseObj.body = hr.getBody();
+  responseObj.headers = responseHeaders;
+
+  return responseObj;
 
   }
 }

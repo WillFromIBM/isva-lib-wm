@@ -1,13 +1,14 @@
 # wm-lib
 An ISAM Infomap Library
 
-Version: 0.3
+Version: 0.4
 
 ## Library Functions:
 
 - generateJWT()
 - base64URLEncode()
 - performGET()
+- performPOST()
 
 ### wm.generateJWT()
 Function:  Returns a signed JWT  
@@ -45,9 +46,7 @@ Function: Performs an HTTP GET request, returns a results object
 Response Object:    
 
 	.code - the HTTP Status code
-
 	.body - the HTTP response body
-
 	.headers - a hash table of response headers
 
 Usage: wm.performGET({url}, {headers}, [debug])
@@ -66,7 +65,35 @@ Example:
 	responseBody = resultObject.body;
 	responseHeaders = resultObject.headers;
 	referrer = resultObject.headers["referrer"];
-    
+
+### wm.performPOST()
+Function: Performs an HTTP POST request, returns a results object
+
+Response Object:    
+
+  .code - the HTTP Status code
+  .body - the HTTP response body
+  .headers - a hash table of response headers
+
+Usage: wm.performPOST({url}, {headers}, {data}, [debug])
+
+where {url} is the URL to get, {headers} is an ISAM headers object, {data} is the post data, [debug] is an optional boolean to increase logging
+
+Example:
+
+  var headers = new Headers();
+  headers.addHeader("iv-user", "testuser");
+  headers.addHeader("foo", "bar");
+
+  var postData = '{"foo":"bar"}';
+
+  resultObject = wm.performPOST("https://example.com/", headers, postData);
+
+  responseCode = resultObject.code;
+  responseBody = resultObject.body;
+  responseHeaders = resultObject.headers;
+  referrer = resultObject.headers["referrer"];
+
 
 ## Installation
 
