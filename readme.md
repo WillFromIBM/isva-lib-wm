@@ -71,9 +71,9 @@ Function: Performs an HTTP POST request, returns a results object
 
 Response Object:    
 
-  .code - the HTTP Status code
-  .body - the HTTP response body
-  .headers - a hash table of response headers
+	.code - the HTTP Status code
+	.body - the HTTP response body
+	.headers - a hash table of response headers
 
 Usage: wm.performPOST({url}, {headers}, {data}, [debug])
 
@@ -81,18 +81,17 @@ where {url} is the URL to get, {headers} is an ISAM headers object, {data} is th
 
 Example:
 
-  var headers = new Headers();
-  headers.addHeader("iv-user", "testuser");
-  headers.addHeader("foo", "bar");
-
-  var postData = '{"foo":"bar"}';
-
-  resultObject = wm.performPOST("https://example.com/", headers, postData);
-
-  responseCode = resultObject.code;
-  responseBody = resultObject.body;
-  responseHeaders = resultObject.headers;
-  referrer = resultObject.headers["referrer"];
+	var headers = new Headers();
+	headers.addHeader("iv-user", "testuser");
+	headers.addHeader("foo", "bar");
+	
+	var postData = '{"foo":"bar"}';
+	resultObject = wm.performPOST("https://example.com/", headers, postData);
+	
+	responseCode = resultObject.code;
+	responseBody = resultObject.body;
+	responseHeaders = resultObject.headers;
+	referrer = resultObject.headers["referrer"];
 
 
 ## Installation
