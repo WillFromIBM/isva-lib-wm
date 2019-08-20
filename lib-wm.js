@@ -1,4 +1,4 @@
-/* WMLib v0.0.4 - Do NOT Modify the first two libraries or their copyright notices */
+/* WMLib v0.0.5 - Do NOT Modify the first two libraries or their copyright notices */
 importClass(Packages.com.tivoli.am.fim.trustserver.sts.utilities.IDMappingExtUtils);
 importClass(Packages.com.ibm.security.access.httpclient.HttpClient);
 importClass(Packages.com.ibm.security.access.httpclient.HttpResponse);
