@@ -1,4 +1,4 @@
-/* WMLib v0.0.1 - Do NOT Modify the first two liberies or their copyright notices */
+/* WMLib v0.0.3 - Do NOT Modify the first two liberies or their copyright notices */
 
 /*
 Library 1 - Do not modify
@@ -32,7 +32,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 
 /*
 Library 3 - Feel free to modify
-WMLib v0.0.1
+WMLib v0.0.3
 github.ibm.com/will-murphy/wmlib
 MIT licence applies only to code from this line below:
 */
@@ -68,5 +68,47 @@ var wm = {
     var S = H + "." + P;
     S = wm.base64URLEncode(CryptoJS.HmacSHA256(S, secret));
     return H + "." + P + "." + S;
+  },
+  performGET: function(url, headers, debug) {
+
+    //perform a GET and return the response body and HTTP code
+    var hr = new HttpResponse();
+    var params= new Parameters();
+
+    //params.addParameter("param1", "param1_value");
+    if (debug == null) { debug = false }
+
+    if (debug) { log("wmlib::perform_get::url:" + url) }
+
+    hr = HttpClient.httpGet(url, headers, null, null, null, null, null, null);
+
+    var responseHeaders = {};
+
+    //Iterate through returned headers
+    if (hr != null) {
+        if (debug) {
+          IDMappingExtUtils.traceString("code: " + hr.getCode());
+          IDMappingExtUtils.traceString("body: " + hr.getBody());
+        }
+
+        headerKeys = hr.getHeaderKeys();
+        if (headerKeys != null) {
+            for ( var i = 0; i < headerKeys.length; i++) {
+                var headerValues = hr.getHeaderValues(headerKeys[i]);
+                for ( var j = 0; j < headerValues.length; j++) {
+                    if (debug) { IDMappingExtUtils.traceString("header: " + headerKeys[i] + "=" + headerValues[j]) }
+                    responseHeaders[headerKeys[i]] = headerValues[j];
+                }
+            }
+        }
+    }
+
+    var responseObj = {};
+    responseObj.code = hr.getCode();
+    responseObj.body = hr.getBody();
+    responseObj.headers = responseHeaders;
+
+    return responseObj;
+
   }
 }
