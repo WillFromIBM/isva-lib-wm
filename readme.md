@@ -9,6 +9,7 @@ Version: 0.4
 - base64URLEncode()
 - performGET()
 - performPOST()
+- generateUUID()
 
 ### wm.generateJWT()
 Function:  Returns a signed JWT  
