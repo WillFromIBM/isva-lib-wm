@@ -1,7 +1,7 @@
 # wm-lib
 An ISAM Infomap Library
 
-Version: 0.4
+Version: 0.6
 
 ## Library Functions:
 
