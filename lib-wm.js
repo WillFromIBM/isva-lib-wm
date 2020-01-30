@@ -1,4 +1,5 @@
-/* WMLib v0.0.5 - Do NOT Modify the first two libraries or their copyright notices */
+/* WMLib v0.0.6 - Do NOT Modify the first two libraries or their copyright notices */
+
 importClass(Packages.com.tivoli.am.fim.trustserver.sts.utilities.IDMappingExtUtils);
 importClass(Packages.com.ibm.security.access.httpclient.HttpClient);
 importClass(Packages.com.ibm.security.access.httpclient.HttpResponse);
@@ -39,9 +40,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 Library 3 - Feel free to modify
 WMLib v0.0.4
 github.ibm.com/will-murphy/wmlib
-MIT licence applies only to code from this line below:
-*/
-
+MIT licence applies only to code from this line below:  */
 var wm = {
   log: function(data) {
     IDMappingExtUtils.traceString('WMLib:: ' + data);
@@ -75,86 +74,72 @@ var wm = {
     return H + "." + P + "." + S;
   },
   performGET: function(url, headers, debug) {
-
     //perform a GET and return the response body and HTTP code
     var hr = new HttpResponse();
     var params= new Parameters();
-
     //params.addParameter("param1", "param1_value");
     if (debug == null) { debug = false }
-
     if (debug) { log("wmlib::perform_get::url:" + url) }
-
     hr = HttpClient.httpGet(url, headers, null, null, null, null, null, null);
-
     var responseHeaders = {};
-
     //Iterate through returned headers
     if (hr != null) {
-        if (debug) {
-          IDMappingExtUtils.traceString("code: " + hr.getCode());
-          IDMappingExtUtils.traceString("body: " + hr.getBody());
+      if (debug) {
+        IDMappingExtUtils.traceString("code: " + hr.getCode());
+        IDMappingExtUtils.traceString("body: " + hr.getBody());
+      }
+      headerKeys = hr.getHeaderKeys();
+      if (headerKeys != null) {
+        for ( var i = 0; i < headerKeys.length; i++) {
+          var headerValues = hr.getHeaderValues(headerKeys[i]);
+          for ( var j = 0; j < headerValues.length; j++) {
+            if (debug) { IDMappingExtUtils.traceString("header: " + headerKeys[i] + "=" + headerValues[j]) }
+            responseHeaders[headerKeys[i]] = headerValues[j];
+          }
         }
-
-        headerKeys = hr.getHeaderKeys();
-        if (headerKeys != null) {
-            for ( var i = 0; i < headerKeys.length; i++) {
-                var headerValues = hr.getHeaderValues(headerKeys[i]);
-                for ( var j = 0; j < headerValues.length; j++) {
-                    if (debug) { IDMappingExtUtils.traceString("header: " + headerKeys[i] + "=" + headerValues[j]) }
-                    responseHeaders[headerKeys[i]] = headerValues[j];
-                }
-            }
-        }
+      }
     }
-
     var responseObj = {};
     responseObj.code = hr.getCode();
     responseObj.body = hr.getBody();
     responseObj.headers = responseHeaders;
-
     return responseObj;
-
   },
   performPOST: function(url, headers, body, debug) {
-	//Perform a post request and return the body of the response
-
-  if (debug == null) { debug = false }
-
-	var hr = new HttpResponse();
-
-  if (debug) {
-	   IDMappingExtUtils.traceString("wmlib::perform_post::url:" + url);
-	   IDMappingExtUtils.traceString("wmlib::perform_post::body:" + body);
-  }
-
-	hr = HttpClient.httpPost(url, headers, body, null, null, null, null, null);
-
-	if (hr != null) {
+    //Perform a post request and return the body of the response
+    if (debug == null) { debug = false }
+    var hr = new HttpResponse();
     if (debug) {
-		    IDMappingExtUtils.traceString("code: " + hr.getCode());
-		    IDMappingExtUtils.traceString("body: " + hr.getBody());
+      IDMappingExtUtils.traceString("wmlib::perform_post::url:" + url);
+      IDMappingExtUtils.traceString("wmlib::perform_post::body:" + body);
     }
-
-		headerKeys = hr.getHeaderKeys();
-		if (headerKeys != null) {
-			for ( var i = 0; i < headerKeys.length; i++) {
-				var headerValues = hr.getHeaderValues(headerKeys[i]);
-				for ( var j = 0; j < headerValues.length; j++) {
-          responseHeaders[headerKeys[i]] = headerValues[j];
-					if (debug) { IDMappingExtUtils.traceString("header: " + headerKeys[i] + "=" + headerValues[j]) }
-				}
-			}
-		}
-	}
-
-
-  var responseObj = {};
-  responseObj.code = hr.getCode();
-  responseObj.body = hr.getBody();
-  responseObj.headers = responseHeaders;
-
-  return responseObj;
-
+    hr = HttpClient.httpPost(url, headers, body, null, null, null, null, null);
+    if (hr != null) {
+      if (debug) {
+        IDMappingExtUtils.traceString("code: " + hr.getCode());
+        IDMappingExtUtils.traceString("body: " + hr.getBody());
+      }
+      headerKeys = hr.getHeaderKeys();
+      if (headerKeys != null) {
+        for ( var i = 0; i < headerKeys.length; i++) {
+          var headerValues = hr.getHeaderValues(headerKeys[i]);
+          for ( var j = 0; j < headerValues.length; j++) {
+            responseHeaders[headerKeys[i]] = headerValues[j];
+            if (debug) { IDMappingExtUtils.traceString("header: " + headerKeys[i] + "=" + headerValues[j]) }
+          }
+        }
+      }
+    }
+    var responseObj = {};
+    responseObj.code = hr.getCode();
+    responseObj.body = hr.getBody();
+    responseObj.headers = responseHeaders;
+    return responseObj;
+  },
+  generateUUID: function() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 }

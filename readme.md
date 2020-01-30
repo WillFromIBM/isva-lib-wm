@@ -84,14 +84,34 @@ Example:
 	var headers = new Headers();
 	headers.addHeader("iv-user", "testuser");
 	headers.addHeader("foo", "bar");
-	
+
 	var postData = '{"foo":"bar"}';
 	resultObject = wm.performPOST("https://example.com/", headers, postData);
-	
+
 	responseCode = resultObject.code;
 	responseBody = resultObject.body;
 	responseHeaders = resultObject.headers;
 	referrer = resultObject.headers["referrer"];
+
+### wm.generateUUID()
+Function: Returns a randomly generated UUID
+
+Response: A UUID. E.g. 005f5c9b-1949-4a04-ab9d-0a542317a5d5
+
+Usage: wm.generateUUID()
+
+Example:
+
+    //Create a unique ID to track this instance of this infomap running.
+    
+    var runid = wm.generateUUID();
+
+    function log(message) {
+      IDMappingExtUtils.traceString("[" + runid + "] " + message);
+    }
+
+    log("Infomap started");
+
 
 
 ## Installation
