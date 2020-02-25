@@ -1,4 +1,4 @@
-/* WMLib v0.0.6 - Do NOT Modify the first two libraries or their copyright notices */
+/* WMLib v0.0.8 - Do NOT Modify the first two libraries or their copyright notices */
 
 importClass(Packages.com.tivoli.am.fim.trustserver.sts.utilities.IDMappingExtUtils);
 importClass(Packages.com.ibm.security.access.httpclient.HttpClient);
@@ -100,8 +100,8 @@ var wm = {
       }
     }
     var responseObj = {};
-    responseObj.code = hr.getCode();
-    responseObj.body = hr.getBody();
+    responseObj.code = (hr == null) ? 000 : hr.getCode();
+    responseObj.body = (hr == null) ? "" : hr.getBody();
     responseObj.headers = responseHeaders;
     return responseObj;
   },
@@ -109,6 +109,7 @@ var wm = {
     //Perform a post request and return the body of the response
     if (debug == null) { debug = false }
     var hr = new HttpResponse();
+    var responseHeaders = {};
     if (debug) {
       IDMappingExtUtils.traceString("wmlib::perform_post::url:" + url);
       IDMappingExtUtils.traceString("wmlib::perform_post::body:" + body);
@@ -131,8 +132,8 @@ var wm = {
       }
     }
     var responseObj = {};
-    responseObj.code = hr.getCode();
-    responseObj.body = hr.getBody();
+    responseObj.code = (hr == null) ? 000 : hr.getCode();
+    responseObj.body = (hr == null) ? "" : hr.getBody();
     responseObj.headers = responseHeaders;
     return responseObj;
   },
